@@ -1,0 +1,4 @@
+*.js
+src/*.js
+src/static/*.js
+src/static/*.html
