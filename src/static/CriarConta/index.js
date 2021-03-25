@@ -1,3 +1,5 @@
+import Utils from "../Utils.js"
+
 $(document).ready(function(){
     pageController.init();
 })
@@ -7,7 +9,7 @@ const pageController = (function(){
         signIn: function(){
             $("#signIn").on("click", async function(){
                 try{
-                    const response = await restFetch("http://localhost:5000/user/create",{
+                    const response = await Utils.fetch(`${Utils.getServerURL()}/user/create`,{
                             method:"POST",
                             body: {
                                 name: $("#name").val(),

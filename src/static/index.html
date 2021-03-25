@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página do Mestre</title>
+    <title>Página Inicial</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -12,10 +12,9 @@
         <input type="text" placeholder="username" id="username">
         <input type="text" placeholder="password" id="password"  type="password">
         <button id="login" type="button">Entrar!</button>
-        <a href="./CriarConta" class="button">Criar usuário!</a>
+        <a router-link="CriarConta" class="button">Criar usuário!</a>
     </div>
 </body>
 <script src="./libs/jquery.js"></script>
-<script src="Utils.js"></script>
-<script src="index.js"></script>
+<script type="module" src="index.js"></script>
 </html>

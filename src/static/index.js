@@ -1,3 +1,6 @@
+import Utils from "./Utils.js";
+import Router from "./routes/index.js";
+
 $(document).ready(function(){
     pageController.init();
 })
@@ -7,7 +10,7 @@ const pageController = (function(){
         login: function(){
             $("#login").on("click", async function(){
                 try{
-                    const response = await restFetch("http://localhost:5000/user/login",{
+                    const response = await Utils.fetch(`${Utils.getServerURL()}/user/login`,{
                         method:"POST",
                         body: {
                             username: $("#username").val(),
@@ -16,12 +19,15 @@ const pageController = (function(){
                     })
                     const respostaVazia = response.data.isEmpty()
                     if(respostaVazia){
-                        alert("Crie um novo usuário")
+                        Router().navigate("CriarConta")
                     }else{
-                        alert("Logado com sucesso!")
+						const {token} = response.data
+						localStorage.setItem("token",token)
+                        Router().navigate("Personagens")
                     }
                 }catch(err){
-                    
+                    alert("ERRO")
+                    console.error(err)
                 }
             })
         }

@@ -1,0 +1,11 @@
+.inline-flex{
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+.inline-flex li{
+    flex-grow: 1;
+}
+.gray-background{
+    background-color: lightgray;
+}
