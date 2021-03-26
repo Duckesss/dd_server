@@ -2,16 +2,20 @@ const Utils = new function(){
     const self = {
         parseFetch: function(promise){
             return new Promise(async (resolve,reject) => {
-                let request = await promise
-                if(!request.ok){
-                    const textError = await request.text();
-                    return reject(new Error(textError))
+                try{
+                    let request = await promise
+                    if(!request.ok){
+                        const textError = await request.text();
+                        return reject(new Error(textError))
+                    }
+                    request = await request.json();
+                    resolve(request)
+                }catch(err){
+                    reject(err)
                 }
-                request = await request.json();
-                resolve(request)
             })
         },
-        urlServer: "http://localhost:5000",
+        urlServer: "http://34.224.1.189:5000",
     }
     const publico = {
         fetch: function(url,config){
