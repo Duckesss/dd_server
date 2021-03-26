@@ -1,0 +1,8 @@
+body{
+    height: 97vh;
+    display: flex;
+    background-color: #e8f0ff;
+}
+body *{
+    display: flex;
+}

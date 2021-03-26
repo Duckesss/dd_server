@@ -1,8 +1,21 @@
-a.button {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
+@import url("./Styles/background.css");
+@import url("./Styles/button.css");
+@import url("./Styles/container.css");
+@import url("./Styles/helpers.css");
+@import url("../Styles/overlay.css");
+@import url("./Styles/input.css");
 
-    text-decoration: none;
-    color: initial;
+.login-group {
+    flex-wrap: wrap;
+    flex: 0 0 100%;
+    flex-direction: column;
+}
+.login-group input{
+    margin-top: 15px;
+}
+.login-group button:first-of-type{
+    margin-top: 20px;
+}
+.login-group button:not(:first-of-type){
+    margin-top: 10px;
 }

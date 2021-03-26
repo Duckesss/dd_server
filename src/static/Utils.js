@@ -24,19 +24,30 @@ const Utils = new function(){
                 },
             }))
         },
-        getServerURL: _ => self.urlServer,
+        get urlServer(){
+            return self.urlServer
+        },
         loading: function(label){
             return {
                 show: _ => console.log(`Carregando ${label}...`),
                 hide: _ => console.log(`${label} carregado!`),
+                get label(){
+                    return label
+                },
+                set label(_label){
+                    label = _label
+                }
             }
+        },
+        characterIcon: function(icone){
+            if(icone)
+                return `<span><img src="${icone}"></img></span>`
+            return `<span class="material-icons">account_circle</span>`
+        },
+        isEmpty: function(){
+            return Object.values(this).length === 0
         }
     }
-    return {
-        ...publico
-    }
-}
-Object.prototype.isEmpty = function(){
-    return Object.values(this).length === 0
+    return {...publico}
 }
 export default Utils

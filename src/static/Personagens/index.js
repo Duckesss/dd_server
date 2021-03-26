@@ -11,15 +11,9 @@ const pageController = (function(){
     const eventsController = {
         addPersonagem: function(){
             $("#addPersonagem").on("click", async function(){
-                $("addPersonagemModal").remove()
-                $("body").prepend(`
-                    <div id="addPersonagemModal" class="gray-background">
-                        <input placeholder="nome do personagem" id="nomePersonagem">
-                        <input placeholder="raça do personagem" id="racaPersonagem">
-                        <input placeholder="classe do personagem" id="classePersonagem">
-                        <button id="criarPersonagem">Criar!</button>
-                    </div>
-                `)
+                $("#addPersonagemModal").remove()
+                $("body").prepend($("#tplAddPersonagem").html())
+                $("#addPersonagemModal").show()
                 $("#criarPersonagem").on("click",async function(){
                     const values = {
                         name:$('#nomePersonagem').val(),
@@ -27,7 +21,7 @@ const pageController = (function(){
                         class:$('#classePersonagem').val()
                     }
                     loading.show()
-                    const novoPersonagem = await Utils.fetch(`${Utils.getServerURL()}/characters/create`,{
+                    const novoPersonagem = await Utils.fetch(`${Utils.urlServer}/characters/create`,{
                         method: "POST",
                         body: values
                     })
@@ -49,12 +43,17 @@ const pageController = (function(){
         render: async function(){
             const personagens = await this.getPersonagens();
             const htmlPersonagens = personagens.data.reduce((html,personagem) => (
-                html += `<li>${personagem.name}</li>`
+                html += `
+                    <li class="flex-center character-card">
+                        ${Utils.characterIcon()}
+                        <span class="character-name">${personagem.name.length > 10 ? personagem.name.substring(0,10) + '...' : personagem.name}</span>
+                    </li>
+                `
             ),'')
             $("#personagensList").html(htmlPersonagens)
         },
         getPersonagens: async function(){
-            const personagens = await Utils.fetch(`${Utils.getServerURL()}/characters/get`)
+            const personagens = await Utils.fetch(`${Utils.urlServer}/characters/get`)
             return personagens
         }
     }

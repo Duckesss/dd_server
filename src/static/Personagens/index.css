@@ -1,11 +1,8 @@
-.inline-flex{
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-}
-.inline-flex li{
-    flex-grow: 1;
-}
-.gray-background{
-    background-color: lightgray;
-}
+@import url("../Styles/background.css");
+@import url("../Styles/button.css");
+@import url("../Styles/container.css");
+@import url("../Styles/helpers.css");
+@import url("../Styles/input.css");
+@import url("../Styles/overlay.css");
+@import url("./Styles/characterCard.css");
+@import url("./Styles/addCharacterModal.css");

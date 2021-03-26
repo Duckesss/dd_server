@@ -10,14 +10,14 @@ const pageController = (function(){
         login: function(){
             $("#login").on("click", async function(){
                 try{
-                    const response = await Utils.fetch(`${Utils.getServerURL()}/user/login`,{
+                    const response = await Utils.fetch(`${Utils.urlServer}/user/login`,{
                         method:"POST",
                         body: {
                             username: $("#username").val(),
                             password: $("#password").val(),
                         }
                     })
-                    const respostaVazia = response.data.isEmpty()
+                    const respostaVazia = Utils.isEmpty(response.data)
                     if(respostaVazia){
                         Router().navigate("CriarConta")
                     }else{

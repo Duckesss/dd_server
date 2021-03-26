@@ -1,0 +1,12 @@
+.add-personagem-modal{
+    flex-direction: column;
+}
+
+.input-container label{
+    padding: 12px 10px;
+}
+
+
+.input-container{
+    margin: 1em 0;
+}

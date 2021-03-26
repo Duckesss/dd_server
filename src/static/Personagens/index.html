@@ -5,15 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personagens</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1 id="addPersonagem"> + Adicionar personagem</h1>
-    <div>
-        <ul id="personagensList" class="inline-flex">
-        </ul>
+    <div class="pd-25">
+        <div id="actions" class="actions-container flex-start">
+            <button id="addPersonagem">Adicionar</button>
+        </div>
+        <div class="flex-center">
+            <ul class="character-card-container" id="personagensList">
+            </ul>
+        </div>
     </div>
 </body>
 <script src="../libs/jquery.js"></script>
 <script type="module" src="index.js"></script>
+
+
+<script id="tplAddPersonagem" type="text/html" style="display: none;">
+    <div id="addPersonagemModal" class="add-personagem-modal flex-center left-overlay">
+        <div class="input-container">
+            <input placeholder="placeholder" class="hidden-ph" type="text" id="nomePersonagem">
+            <label for="Nome">Nome</label>
+        </div>
+        <div class="input-container">
+            <input placeholder="placeholder" class="hidden-ph" type="text" id="racaPersonagem">
+            <label for="Raça">Raça</label>
+        </div>
+        <div class="input-container">
+            <input placeholder="placeholder" class="hidden-ph" type="text" id="classePersonagem">
+            <label for="Classe">Classe</label>
+        </div>
+        <button id="criarPersonagem">Criar</button>
+    </div>
+</script>
+
 </html>
