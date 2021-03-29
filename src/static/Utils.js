@@ -15,7 +15,8 @@ const Utils = new function(){
                 }
             })
         },
-        urlServer: "http://34.224.1.189:5000",
+        // urlServer: "http://34.224.1.189:5000",
+        urlServer: "http://localhost:5000",
     }
     const publico = {
         fetch: function(url,config){
@@ -42,11 +43,6 @@ const Utils = new function(){
                     label = _label
                 }
             }
-        },
-        characterIcon: function(icone){
-            if(icone)
-                return `<span><img src="${icone}"></img></span>`
-            return `<span class="material-icons">account_circle</span>`
         },
         isEmpty: function(){
             return Object.values(this).length === 0

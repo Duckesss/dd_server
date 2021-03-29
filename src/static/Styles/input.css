@@ -10,6 +10,11 @@ input.hidden-ph::placeholder{
     transition: .5s;
     opacity: 0.5;
 }
+
+.input-group label{
+    color: #2F3061;
+}
+
 .input-container input:focus ~ label,
 input:not(:placeholder-shown) ~label {
     margin-top:-15px;
@@ -17,12 +22,26 @@ input:not(:placeholder-shown) ~label {
     opacity: 1;
     color: #2F3061;
 }
+
+.input-group{
+    flex-direction: column;
+    width: 100%;
+}
+
+
 input{
     background-color: transparent;
     border: none;
     border-bottom: 1px solid black;
     padding: 8px;
 }
+
+select{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
 button{
     border-radius: 8px;
     background-color: transparent;

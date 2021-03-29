@@ -25,17 +25,24 @@
 
 <script id="tplAddPersonagem" type="text/html" style="display: none;">
     <div id="addPersonagemModal" class="add-personagem-modal flex-center left-overlay">
+        <div class="close-button">
+            <h1>Close</h1>
+        </div>
         <div class="input-container">
             <input placeholder="placeholder" class="hidden-ph" type="text" id="nomePersonagem">
             <label for="Nome">Nome</label>
         </div>
-        <div class="input-container">
-            <input placeholder="placeholder" class="hidden-ph" type="text" id="racaPersonagem">
-            <label for="Raça">Raça</label>
+        <div class="input-group">
+            <label for="racaPersonagem">Raça</label>
+            <select id="racaPersonagem">
+                <option value="carregando..." selected>carregando...</option>
+            </select>
         </div>
-        <div class="input-container">
-            <input placeholder="placeholder" class="hidden-ph" type="text" id="classePersonagem">
-            <label for="Classe">Classe</label>
+        <div class="input-group">
+            <label for="classePersonagem">Classe</label>
+            <select id="classePersonagem">
+                <option value="carregando..." selected>carregando...</option>
+            </select>
         </div>
         <button id="criarPersonagem">Criar</button>
     </div>

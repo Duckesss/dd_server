@@ -7,6 +7,28 @@ $(document).ready(async function(){
     loading.hide();
 })
 
+const Personagem = class{
+    constructor(personagem){
+        this.personagem = personagem
+    }
+    getIcon(icone){
+        if(icone)
+            return `<span><img src="${icone}"></img></span>`
+        return `<span class="material-icons">account_circle</span>`
+    }
+    getName(){
+        return this.personagem.name.length > 10 ? this.personagem.name.substring(0,10) + '...' : this.personagem.name
+    }
+    getCard(){
+        return `
+        <li class="flex-center character-card">
+            ${this.getIcon()}
+            <span class="character-name">${this.getName()}</span>
+        </li>
+    `
+    }
+}
+
 const pageController = (function(){
     const eventsController = {
         addPersonagem: function(){
@@ -25,9 +47,8 @@ const pageController = (function(){
                         method: "POST",
                         body: values
                     })
-                    console.log(novoPersonagem)
-                    const li = `<li>${novoPersonagem.data.name}</li>`
-                    $("#personagensList").append(li)
+                    const personagem = new Personagem(novoPersonagem.data)
+                    $("#personagensList").append(personagem.getCard())
                     loading.hide()
                 })
             })
@@ -37,24 +58,52 @@ const pageController = (function(){
         eventsController,
         init: async function(){
             const self = this
-            await this.render();
+            const dados = await this.getDados()
+            await this.render(dados);
             Object.values(this.eventsController).forEach(e => e.apply(self))
         },
-        render: async function(){
-            const personagens = await this.getPersonagens();
-            const htmlPersonagens = personagens.data.reduce((html,personagem) => (
-                html += `
-                    <li class="flex-center character-card">
-                        ${Utils.characterIcon()}
-                        <span class="character-name">${personagem.name.length > 10 ? personagem.name.substring(0,10) + '...' : personagem.name}</span>
-                    </li>
-                `
-            ),'')
-            $("#personagensList").html(htmlPersonagens)
+        getDados: new function(){
+            const self = {
+                getPersonagens: async function(){
+                    const personagens = await Utils.fetch(`${Utils.urlServer}/characters/get`)
+                    return personagens
+                },
+                getRacas: async function(){
+                    const racas = await Utils.fetch(`${Utils.urlServer}/breed/getAll`)
+                    return racas
+                },
+                getClasses: async function(){
+                    const classes = await Utils.fetch(`${Utils.urlServer}/classes/getAll`)
+                    return classes
+                }
+            }
+            return async function(){
+                const {data : personagens} = await self.getPersonagens();
+                const {data: racas} = await self.getRacas();
+                const {data: classes} = await self.getClasses();
+                return {personagens,racas,classes}
+            }
         },
-        getPersonagens: async function(){
-            const personagens = await Utils.fetch(`${Utils.urlServer}/characters/get`)
-            return personagens
-        }
+        render: new function(){
+            const self = {
+                cardPersonagens: function(personagens){
+                    const htmlPersonagens = personagens.reduce((html,personagem) => (
+                        html += new Personagem(personagem).getCard()
+                    ),'')
+                    $("#personagensList").html(htmlPersonagens)
+                },
+                optionRacas: function(racas){
+                    console.log(racas)
+                },
+                optionsClasses: function(classes){
+                    console.log(classes)
+                }
+            }
+            return function({personagens,racas,classes}){
+                self.cardPersonagens(personagens);
+                self.optionRacas(racas);
+                self.optionsClasses(classes);
+            }
+        },
     }
 })()

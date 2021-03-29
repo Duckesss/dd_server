@@ -6,7 +6,11 @@
     padding: 12px 10px;
 }
 
-
-.input-container{
+:is(.input-container,.input-group){
     margin: 1em 0;
+}
+
+.add-personagem-modal .input-container input:focus ~ label,
+input:not(:placeholder-shown) ~label {
+    margin-top:-20px;
 }
