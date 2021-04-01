@@ -3,7 +3,7 @@
 }
 
 .input-container label{
-    padding: 12px 10px;
+    padding: 4px 10px;
 }
 
 :is(.input-container,.input-group){
@@ -14,3 +14,4 @@
 input:not(:placeholder-shown) ~label {
     margin-top:-20px;
 }
+

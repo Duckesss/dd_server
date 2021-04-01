@@ -5,7 +5,7 @@ input.hidden-ph::placeholder{
 .input-container label{
     position: absolute;
     user-select: none;
-    padding:22px 10px;
+    padding:18px 10px;
     pointer-events: none;
     transition: .5s;
     opacity: 0.5;
@@ -33,13 +33,16 @@ input{
     background-color: transparent;
     border: none;
     border-bottom: 1px solid black;
-    padding: 8px;
+    padding: 8px 8px 4px 8px;
 }
 
 select{
+    padding: 8px 8px 4px 8px;
     background-color: transparent;
     border: none;
     border-bottom: 1px solid black;
+    appearance: none;
+    background: url(./images/arrow-down.svg) 100% 70% / 15% no-repeat transparent;
 }
 
 button{

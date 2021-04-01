@@ -2,7 +2,6 @@
 @import url("./Styles/button.css");
 @import url("./Styles/container.css");
 @import url("./Styles/helpers.css");
-@import url("../Styles/overlay.css");
 @import url("./Styles/input.css");
 
 .login-group {
@@ -18,4 +17,7 @@
 }
 .login-group button:not(:first-of-type){
     margin-top: 10px;
+}
+.login-group div:not(:first-of-type){
+    margin-top: 5px;
 }

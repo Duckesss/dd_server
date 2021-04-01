@@ -29,41 +29,13 @@ const Personagem = class{
     }
 }
 
+
 const pageController = (function(){
-    const eventsController = {
-        addPersonagem: function(){
-            $("#addPersonagem").on("click", async function(){
-                $("#addPersonagemModal").remove()
-                $("body").prepend($("#tplAddPersonagem").html())
-                $("#addPersonagemModal").show()
-                $("#criarPersonagem").on("click",async function(){
-                    const values = {
-                        name:$('#nomePersonagem').val(),
-                        breed:$('#racaPersonagem').val(),
-                        class:$('#classePersonagem').val()
-                    }
-                    loading.show()
-                    const novoPersonagem = await Utils.fetch(`${Utils.urlServer}/characters/create`,{
-                        method: "POST",
-                        body: values
-                    })
-                    const personagem = new Personagem(novoPersonagem.data)
-                    $("#personagensList").append(personagem.getCard())
-                    loading.hide()
-                })
-            })
-        }
-    }
-    return {
-        eventsController,
-        init: async function(){
-            const self = this
-            const dados = await this.getDados()
-            await this.render(dados);
-            Object.values(this.eventsController).forEach(e => e.apply(self))
-        },
+    const _private = {
         getDados: new function(){
+            let consultou = false
             const self = {
+                personagens: null, racas:null, classes: null,
                 getPersonagens: async function(){
                     const personagens = await Utils.fetch(`${Utils.urlServer}/characters/get`)
                     return personagens
@@ -78,10 +50,17 @@ const pageController = (function(){
                 }
             }
             return async function(){
-                const {data : personagens} = await self.getPersonagens();
-                const {data: racas} = await self.getRacas();
-                const {data: classes} = await self.getClasses();
-                return {personagens,racas,classes}
+                if(consultou === false){
+                    self.personagens = ( await self.getPersonagens() ).data
+                    self.racas = ( await self.getRacas() ).data
+                    self.classes = ( await self.getClasses() ).data
+                    consultou = true
+                }
+                return {
+                    personagens: self.personagens,
+                    racas: self.racas,
+                    classes: self.classes
+                }
             }
         },
         render: new function(){
@@ -93,10 +72,16 @@ const pageController = (function(){
                     $("#personagensList").html(htmlPersonagens)
                 },
                 optionRacas: function(racas){
-                    console.log(racas)
+                    const htmlRacas = racas.reduce((html,raca) => (
+                        html += `<option value="${raca._id}">${raca.name}</option>`
+                    ),'')
+                    $("#racaPersonagem").html(htmlRacas)
                 },
                 optionsClasses: function(classes){
-                    console.log(classes)
+                    const htmlClasses = classes.reduce((html,classe) => (
+                        html += `<option value="${classe._id}">${classe.name}</option>`
+                    ),'')
+                    $("#classePersonagem").html(htmlClasses)
                 }
             }
             return function({personagens,racas,classes}){
@@ -105,5 +90,44 @@ const pageController = (function(){
                 self.optionsClasses(classes);
             }
         },
+        getAndRenderData: async function(){
+            const dados = await _private.getDados()
+            await this.render(dados);
+        },
     }
+    const _public = {
+        init: async function(){
+            const self = this
+            await _private.getAndRenderData()
+            Object.values(this.eventsController).forEach(e => e.apply(self))
+        },
+        eventsController: {
+            addPersonagem: function(){
+                $("#addPersonagem").on("click", async function(){
+                    $("#addPersonagemModal").remove()
+                    $("body").prepend($("#tplAddPersonagem").html())
+                    $("#addPersonagemModal").show()
+                    loading.show()
+                    await _private.getAndRenderData()
+                    loading.hide()
+                    $("#criarPersonagem").on("click",async function(){
+                        loading.show()
+                        const values = {
+                            name:$('#nomePersonagem').val(),
+                            breed:$('#racaPersonagem').val(),
+                            class:$('#classePersonagem').val()
+                        }
+                        const novoPersonagem = await Utils.fetch(`${Utils.urlServer}/characters/create`,{
+                            method: "POST",
+                            body: values
+                        })
+                        const personagem = new Personagem(novoPersonagem.data)
+                        $("#personagensList").append(personagem.getCard())
+                        loading.hide()
+                    })
+                })
+            }
+        }
+    }
+    return _public
 })()
