@@ -35,7 +35,11 @@ const ServicesController = new function(){
     const self = {
         personagens: null, racas:null, classes: null,
         getPersonagens: async function(){
-            const personagens = await Utils.fetch(`${Utils.urlServer}/characters/get`)
+            const personagens = await Utils.fetch(`${Utils.urlServer}/characters/get`,{
+                headers: {
+                    authorization: localStorage.getItem("token")
+                }
+            })
             return personagens
         },
         getRacas: async function(){
@@ -49,7 +53,7 @@ const ServicesController = new function(){
     }
     return {
         getDados: async function(){
-            self.personagens = ( await self.getPersonagens() ).data
+            self.personagens = ( await self.getPersonagens() ).data.characters
             self.racas = ( await self.getRacas() ).data
             self.classes = ( await self.getClasses() ).data
             return {
@@ -59,7 +63,7 @@ const ServicesController = new function(){
             }
         },
         getPersonagens: async function(){
-            self.personagens = ( await self.getPersonagens() ).data
+            self.personagens = ( await self.getPersonagens() ).data.characters
             return self.personagens
         },
         getRacas: async function(){
@@ -151,7 +155,10 @@ const eventsController = new function(){
                     }
                     const novoPersonagem = await Utils.fetch(`${Utils.urlServer}/characters/create`,{
                         method: "POST",
-                        body: values
+                        body: values,
+                        headers:{
+                            authorization: localStorage.getItem("token")
+                        }
                     })
                     const personagem = new Personagem(novoPersonagem.data)
                     $("#personagensList").append(personagem.getCard())
