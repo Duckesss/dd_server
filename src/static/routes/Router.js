@@ -1,8 +1,8 @@
 const Router = function(id,routes){
     const navigate = route => {
-        const achouRota = routes.find(r => r.name === route)
+        const achouRota = routes.find(r => r.name === route.replace(/\?.+/,''))
         if(achouRota){
-            window.location.href = `${window.location.origin}/${achouRota.path}`
+            window.location.href = `${window.location.origin}/${route}`
         }else{
             throw Error("Rota não encontrada!")
         }

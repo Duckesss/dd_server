@@ -167,7 +167,8 @@ const eventsController = new function(){
         },
         clickPersonagemCard: function(){
             $('.character-card').on('click',function(){
-                Router().navigate(`Personagem?id=${this.dataset.id}`)
+                // Router().navigate(`personagem/${this.dataset.id}`)
+                console.log("rotea usuario para: ",`personagem/${this.dataset.id}`)
             })
         }
     }
