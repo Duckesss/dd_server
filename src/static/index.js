@@ -4,7 +4,6 @@ import Router from "./routes/index.js";
 $(document).ready(function(){
     pageController.init();
 })
-
 const pageController = (function(){
     const eventsController = {
         login: function(){
@@ -34,7 +33,7 @@ const pageController = (function(){
     }
     return {
         eventsController,
-        init: function(){
+        init: async function(){
             const self = this
             Object.values(this.eventsController).forEach(e => e.apply(self))
         }

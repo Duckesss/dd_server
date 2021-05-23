@@ -44,8 +44,8 @@ const Utils = new function(){
                 }
             }
         },
-        isEmpty: function(){
-            return Object.values(this).length === 0
+        isEmpty: function(obj){
+            return Object.values(obj).length === 0
         }
     }
     return {...publico}
